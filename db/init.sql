@@ -1,0 +1,35 @@
+CREATE TABLE IF NOT EXISTS users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(150) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS contacts (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(150),
+  phone VARCHAR(50),
+  color VARCHAR(20),
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS tasks (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(200) NOT NULL,
+  description TEXT,
+  due_date DATE,
+  priority VARCHAR(20),
+  category VARCHAR(100),
+  status VARCHAR(50) DEFAULT 'todo',
+  assigned_to INTEGER[],
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS subtasks (
+  id SERIAL PRIMARY KEY,
+  task_id INTEGER REFERENCES tasks(id) ON DELETE CASCADE,
+  title VARCHAR(200) NOT NULL,
+  done BOOLEAN DEFAULT FALSE
+);
